@@ -3,13 +3,13 @@ from scipy.integrate import odeint
 from scipy.integrate import quad
 from scipy.optimize import curve_fit
 from scipy import signal
-import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import pickle
 import control as ct
 import os
 from tkinter import filedialog
+import pandas as pd
 
 def transfer_function(t, k, tau1, tau2):
     return k/(tau1*t + tau2)
