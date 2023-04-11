@@ -12,7 +12,6 @@ def plot_step(sys,title):
     plt.xlabel('Time (s)')
     plt.ylabel('Output')
     plt.grid()
-    plt.title(title)
 
 def TF(k,a):
     num = [k, a*k]
@@ -20,6 +19,7 @@ def TF(k,a):
     sys = ct.TransferFunction(num, den)
     print(sys)
     return sys
+
 # Definimos las variables K y a para realizar el grafico
 def f(k, a):
     return (k**2 + (64*a - 116)*k - 1260)/(k - 126)
@@ -30,14 +30,15 @@ if __name__ == "__main__":
     os.system("cls")
 
     # Crear valores de k y a
-    k = np.linspace(1, 15000, 15000)
+    k = np.linspace(1, 500, 350)
     a = k
 
     # Crear una máscara booleana para seleccionar solo los valores de k y a que cumplen con la condición a>0 y k>126
-    mask = (a > 0) & (k < 126)
+    mask = (a > 0) & (k >126)
 
     # Tracer la función solo para los valores de k y a que cumplen con la condición a>0 y k>126
     plt.plot(k[mask], f(k[mask], a[mask]), label="K vs a")
+    plt.savefig('K_vs_A', dpi=300)
 
     # Agregar etiquetas de eje y título de la gráfica
     plt.xlabel("k")
@@ -51,7 +52,7 @@ if __name__ == "__main__":
     times = []
     for i in range(len(k)):
         for j in range(len(a)):
-            if  (41.66 >= k[i]*a[j]) and (k[i] < 126) and (a[j] >= 0):
+            if  ( 10/(k[i]*a[j]) <=0.24 ) and (k[i] < 126) and (a[j] >= 0 and a[j] <= 200):
                 sys1 = TF(k[i],a[j])
                 try:
                     info = ct.step_info(sys1)
@@ -73,9 +74,11 @@ if __name__ == "__main__":
     #Definimos el sistema inestable
     Isys = TF(127,0)
     plot_step(Isys,"Inestable Step response")
+    plt.savefig('Inestable_Step_Response.png', dpi=300)
 
     #Definimos el sistema estable
     Esys = TF(k_op,a_op)
-    plot_step(Esys," Estable Step response")
+    plot_step(Esys,"Estable Step response")
+    plt.savefig('Estable_Step_Response.png', dpi=300)
 
     plt.show()

@@ -19,22 +19,32 @@ def update(frame):
     ax.set_title('Lugar Geométrico de las Raíces')
     return lgr_curve
 
+def save_animation(ani):
+    # Exportar la animación como un archivo PNG
+    ani.save("animation.png", dpi=300)
 
 if __name__ == "__main__":
     os.system("cls")
 
+    sys2 = TF(1)
+    plt.savefig('K', dpi=300)
+
     # Crear la figura y el eje
     fig, ax = plt.subplots()
 
-    val = input("hasta que valor de k desea graficar? : \n  >",)
+    val = input("hasta que valor de k desea graficar? : \n >",)
 
     k = [i+1 for i in range(int(val))]
+
 
     # Crear una lista para guardar la curva del LGR en cada iteración
     lgr_curve = []
 
     # Crear la animación
-    ani = animation.FuncAnimation(fig, update, frames=len(k), interval=300, repeat=False)
+    ani = animation.FuncAnimation(fig, update, frames=len(k), interval=50, repeat=False)
 
-    # Mostrar el gráfico
+    # Mostrar el gráfico en una ventana emergente
     plt.show()
+
+    # Guardar la animación en un archivo PNG
+    save_animation(ani)

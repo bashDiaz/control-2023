@@ -1,71 +1,74 @@
+import numpy as np
 import matplotlib.pyplot as plt
-import os
-import math
 
-#limpiar pantalla
-os.system("cls")
-
-dic = {}
-#definir parametros
-pol = input("Defina los numeros que acompanan las S empezando por el de mayor grado  y separando espacio Empieza: ")
-pol = pol.split(" ")
-pol = [int(i) for i in pol]
-
-for i in range(len(pol)):
-    vec = []
-    dic["s"+str(i)] = vec
-
-for i in range(len(pol)):
-    if i%2 == 0:
-        dic["s"+str(len(pol)-1)].append(pol[i])
+def routh(p, k=1):
+    n = len(p)
+    routh_table = np.zeros((n, (n+1)//2))
+    routh_table[0, :] = p[0::2]
+    if n%2 == 0:
+        routh_table[1, :] = p[1::2]
     else:
-        dic["s"+str(len(pol)-2)].append(pol[i])
+        routh_table[1, :-1] = p[1::2]
 
-for i in range(len(pol)-3,-1,-1):
-    vec1 = dic["s"+str(i+2)]
-    vec2 = dic["s"+str(i+1)]
-    vec3 = []
-    for j in range(len(vec1)):
-        try:
-            val = ((vec2[0]*vec1[j+1])-(vec1[0]*vec2[j+1]))/vec2[0]
-            vec3.append(val)
-        except IndexError:
-            vec3.append(0)
-    dic["s"+str(i)] = vec3
+    for i in range(2, n):
+        for j in range((n+1)//2 - 1):
+            a, b, c = routh_table[i-2, j], routh_table[i-1, j], routh_table[i-1, j+1]
+            if b == 0:
+                b = 1e-9 #avoid division by zero
+            routh_table[i, j] = -c/b * a
 
-est = []
+        if np.all(np.isnan(routh_table[i])):
+            print("Error: Polynomial has multiple roots on imaginary axis")
+            return None
 
-for i in range(len(pol)-1,-1,-1):
-    est.append(dic["s"+str(i)][0])
-    vec = dic["s"+str(i)]
-    for j in range (len(vec)): 
-        try:
-            if (vec[j] == 0 or vec[j]==-0 or vec[j]== 0.0 or vec[j]==-0.0) and j != 0 :
-                vec.pop(j)
-        except IndexError:
-            pass
-    dic["s"+str(i)] = vec
+    num_sign_changes = np.sum(np.diff(np.sign(routh_table), axis=1) != 0, axis=1)
+    unstable_roots = 0
+    for nsc in num_sign_changes:
+        if nsc % 2 != 0:
+            unstable_roots += 1
 
-for i in range(len(pol)-1,-1,-1):
-    vec = dic["s"+str(i)]
-    print("s"+str(i), end=" ")
-    for j in range(len(vec)):
-        print(vec[j], end=" ")
-    print("")
-        
+    if unstable_roots == 0:
+        print("System is stable for all values of K")
+    elif unstable_roots == 1:
+        print("System has 1 unstable root for some values of K")
+    else:
+        print("System has {} unstable roots for some values of K".format(unstable_roots))
 
-ins = False
-cri = False
+    print("Routh table:")
+    print(routh_table)
+    
+    # Polinomio roots
+    roots = np.roots(p)
+    print(f"Polynomial roots: {roots}")
+    
+    # Gráfica del polinomio en el plano imaginario
+    plt.figure()
+    plt.title("Polynomial roots")
+    plt.xlabel("Real axis")
+    plt.ylabel("Imaginary axis")
+    np_roots = np.roots(p)
+    plt.plot(np_roots.real, np_roots.imag, 'o')
+    plt.axhline(y=0, color='k')
+    plt.axvline(x=0, color='k')
+    plt.grid(True)
+    plt.show()
 
-for i in range(len(est)):
-    if est[i] < 0:
-        ins = True
-    if est[i] == 0 and ins!=True:
-        cri = True
+# Ejemplo 1: Polinomio sin coeficientes nulos
+p1 = [1, 5, 8, 6]
+routh(p1, k=1)
 
-if ins:
-    print("El sistema es inestable")
-elif cri:
-    print("El sistema es critico")
-else:
-    print("El sistema es estable")
+# Ejemplo 2: Polinomio con coeficientes nulos
+p2 = [1, 0, 3, 0, 2, 0]
+routh(p2, k=2)
+
+# Ejemplo 3: Polinomio con raíces imaginarias puras
+p3 = [1, 2, 4, 2]
+routh(p3, k=1.5)
+
+# Ejemplo 4: Polinomio con raíces múltiples en el eje imaginario
+p4 = [1, 2, 2, 2, 2]
+routh(p4, k=3)
+
+# Ejemplo 5: Polinomio con un caso especial del criterio de estabilidad de Routh
+p5 = [1, 6, 5, -4]
+routh(p5, k=1)
