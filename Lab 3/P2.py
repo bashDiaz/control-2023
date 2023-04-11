@@ -38,3 +38,4 @@ if __name__ == "__main__":
 
     # Mostrar el gráfico
     plt.show()
+ 
