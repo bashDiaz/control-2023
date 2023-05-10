@@ -34,7 +34,7 @@ if __name__ == "__main__":
     a = k
 
     # Crear una máscara booleana para seleccionar solo los valores de k y a que cumplen con la condición a>0 y k>126
-    mask = (a > 0) & (k >126)
+    mask = (a > 0) & (k < 126)
 
     # Tracer la función solo para los valores de k y a que cumplen con la condición a>0 y k>126
     plt.plot(k[mask], f(k[mask], a[mask]), label="K vs a")

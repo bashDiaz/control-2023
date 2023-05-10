@@ -1,0 +1,1445 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body><w:p><w:pPr><w:pStyle w:val="code"/></w:pPr><w:r><w:t><![CDATA[classdef integrador_p4 < matlab.apps.AppBase
+
+    % Properties that correspond to app components
+    properties (Access = public)
+        UIFigure                        matlab.ui.Figure
+        GridLayout                      matlab.ui.container.GridLayout
+        LeftPanel                       matlab.ui.container.Panel
+        GridLayoutLeft                  matlab.ui.container.GridLayout
+        ControldebalanceodeunavinLabel  matlab.ui.control.Label
+        BloquesDefTab                   matlab.ui.container.TabGroup
+        ControladorTab                  matlab.ui.container.Tab
+        GridLayout14                    matlab.ui.container.GridLayout
+        XsLabel                         matlab.ui.control.Label
+        k_pleft1frac1sT_isT_drightLabel  matlab.ui.control.Label
+        TEditField                      matlab.ui.control.NumericEditField
+        TEditFieldLabel                 matlab.ui.control.Label
+        k_pEditField                    matlab.ui.control.NumericEditField
+        k_pEditFieldLabel               matlab.ui.control.Label
+        TipoDropDown                    matlab.ui.control.DropDown
+        TipoDropDownLabel               matlab.ui.control.Label
+        ServomotordealernTab            matlab.ui.container.Tab
+        GridLayout13                    matlab.ui.container.GridLayout
+        AsLabel                         matlab.ui.control.Label
+        frack_aa_1sa_2Label             matlab.ui.control.Label
+        a_2EditFieldLabel               matlab.ui.control.Label
+        a_2EditField                    matlab.ui.control.NumericEditField
+        a_1EditFieldLabel               matlab.ui.control.Label
+        a_1EditField                    matlab.ui.control.NumericEditField
+        k_aEditFieldLabel               matlab.ui.control.Label
+        k_aEditField                    matlab.ui.control.NumericEditField
+        DinmicadebalanceoTab            matlab.ui.container.Tab
+        GridLayout15                    matlab.ui.container.GridLayout
+        PsLabel                         matlab.ui.control.Label
+        fracL_deltassL_pLabel           matlab.ui.control.Label
+        L_pEditFieldLabel               matlab.ui.control.Label
+        L_pEditField                    matlab.ui.control.NumericEditField
+        L_deltaEditFieldLabel           matlab.ui.control.Label
+        L_deltaEditField                matlab.ui.control.NumericEditField
+        GiroscopioTab                   matlab.ui.container.Tab
+        GridLayout16                    matlab.ui.container.GridLayout
+        HsLabel                         matlab.ui.control.Label
+        frack_sb_1sb_2Label             matlab.ui.control.Label
+        b_2EditFieldLabel               matlab.ui.control.Label
+        b_2EditField                    matlab.ui.control.NumericEditField
+        b_1EditFieldLabel               matlab.ui.control.Label
+        b_1EditField                    matlab.ui.control.NumericEditField
+        k_sEditFieldLabel               matlab.ui.control.Label
+        k_sEditField                    matlab.ui.control.NumericEditField
+        PerturbacionesTab               matlab.ui.container.Tab
+        GridLayout17                    matlab.ui.container.GridLayout
+        PotenciaNEditField              matlab.ui.control.NumericEditField
+        PotenciaNEditFieldLabel         matlab.ui.control.Label
+        Magnitudk_osEditField           matlab.ui.control.NumericEditField
+        Magnitudk_osEditFieldLabel      matlab.ui.control.Label
+        RfagadevientoCheckBox           matlab.ui.control.CheckBox
+        TurbulenciaCheckBox             matlab.ui.control.CheckBox
+        multipleControlPanel            matlab.ui.container.Panel
+        SimularsistemaButton            matlab.ui.control.Button
+        configPanel                     matlab.ui.container.ButtonGroup
+        multiKp                         matlab.ui.control.EditField
+        k_pLabel                        matlab.ui.control.Label
+        ManualButton                    matlab.ui.control.RadioButton
+        AutoButton                      matlab.ui.control.RadioButton
+        RespuestaamltiplescontroladoresSwitch  matlab.ui.control.Switch
+        RespuestaamltiplescontroladoresSwitchLabel  matlab.ui.control.Label
+        TFySsPanel                      matlab.ui.container.TabGroup
+        FuncindetransferenciadelazocerradoTab  matlab.ui.container.Tab
+        GridLayout7                     matlab.ui.container.GridLayout
+        TFTextArea                      matlab.ui.control.TextArea
+        EspaciodeestadosTab             matlab.ui.container.Tab
+        TFTextArea_2                    matlab.ui.control.TextArea
+        DiagramaBloquesImage            matlab.ui.control.Image
+        CenterPanel                     matlab.ui.container.Panel
+        GridLayout2                     matlab.ui.container.GridLayout
+        TabGroup                        matlab.ui.container.TabGroup
+        STEPinfoTab                     matlab.ui.container.Tab
+        GridLayout9                     matlab.ui.container.GridLayout
+        Panel_7                         matlab.ui.container.Panel
+        GridLayout18                    matlab.ui.container.GridLayout
+        Panel_8                         matlab.ui.container.Panel
+        FuncindetransferenciadelazoabiertoTextArea  matlab.ui.control.TextArea
+        FuncindetransferenciadelazoabiertoTextAreaLabel  matlab.ui.control.Label
+        infoTempoTabla                  matlab.ui.control.Table
+        infoTempoAxes                   matlab.ui.control.UIAxes
+        BODEinfoTab                     matlab.ui.container.Tab
+        GridLayout6                     matlab.ui.container.GridLayout
+        infoFrecTabla                   matlab.ui.control.Table
+        infoFrecAxes                    matlab.ui.control.UIAxes
+        TabGroup3                       matlab.ui.container.TabGroup
+        RespuestaeneltiempoTab          matlab.ui.container.Tab
+        GridLayout11                    matlab.ui.container.GridLayout
+        Panel_6                         matlab.ui.container.Panel
+        PeriodosegEditField             matlab.ui.control.NumericEditField
+        PeriodosegEditFieldLabel        matlab.ui.control.Label
+        matButton                       matlab.ui.control.Button
+        rtEditField                     matlab.ui.control.EditField
+        rtLabel                         matlab.ui.control.Label
+        SealdeentradaDropDown           matlab.ui.control.DropDown
+        axesTemporal                    matlab.ui.control.UIAxes
+        BODETab                         matlab.ui.container.Tab
+        GridLayout8                     matlab.ui.container.GridLayout
+        bodeMagAxes                     matlab.ui.control.UIAxes
+        bodeFaseAxes                    matlab.ui.control.UIAxes
+        RightPanel                      matlab.ui.container.Panel
+        GridLayout4                     matlab.ui.container.GridLayout
+        TabGroup6                       matlab.ui.container.TabGroup
+        SimulacinyModelo3DTab           matlab.ui.container.Tab
+        TabGroup5                       matlab.ui.container.TabGroup
+        RegindeestabilidadTab           matlab.ui.container.Tab
+        CrticamenteestableLabel         matlab.ui.control.Label
+        DeltaSlider                     matlab.ui.control.Slider
+        DeltaSliderLabel                matlab.ui.control.Label
+        RegininestableLabel             matlab.ui.control.Label
+        ReginestableLabel               matlab.ui.control.Label
+        regionEstAxes                   matlab.ui.control.UIAxes
+        LugargeomtricodelasracesTab     matlab.ui.container.Tab
+        GridLayout12                    matlab.ui.container.GridLayout
+        Panel_5                         matlab.ui.container.Panel
+        rootLocusAxes                   matlab.ui.control.UIAxes
+    end
+
+    % Properties that correspond to apps with auto-reflow
+    properties (Access = private)
+        onePanelWidth = 576;
+        twoPanelWidth = 768;
+    end
+
+
+    properties (Access = private)
+        controlador                                         % Especificaciones del controlador
+        actuador                                            % Especificaciones del actuador
+        planta                                              % Especificaciones de la planta
+        sensor                                              % Especificaciones del sensor
+        configTiempo                                        % Set-up para simular respuesta temporal}
+        perturbaciones                                      % Especificaciones de las perturbaciones
+        multiplotSwitch                                     % Verifica el modo de gráficas
+        coloresRGB = {                                      % Colores de las líneas en las gráficas
+            [1.00,0.00,1.00]; %1
+            [0.00,0.00,1.00]; %2
+            [0.00,1.00,0.00]; %3
+            [1.00,0.00,0.00]; %4
+            [0.00,1.00,1.00]; %5
+            [0.49,0.18,0.56]; %6
+            [0.93,0.69,0.13]; %7
+            [0.64,0.08,0.18]; %8
+            }
+        file                                                % Archivo .mat con valores de kp
+        opt = pzoptions;                                    % Plot options for rlocusplot
+    end
+
+    methods (Access = private)
+
+        function tipoControlador(app,j)
+            app.controlador.tipo = app.TipoDropDown.Value;
+            tipos = {'Proporcional','Integral','Derivativo'};
+
+            if app.multiplotSwitch
+                k=str2num(app.multiKp.Value);
+                app.controlador.kp = k(j);
+            else
+                app.controlador.kp = app.k_pEditField.Value;
+            end
+
+            app.DeltaSlider.Enable = 'on';
+            switch app.controlador.tipo
+                case tipos{1}
+                    app.controlador.ti = 0;
+                    app.controlador.td = 0;
+                    app.TEditField.Enable = 'off';
+                    app.DeltaSlider.Enable = 'off';
+                case tipos{2}
+                    app.controlador.ti = inv(app.TEditField.Value);
+                    app.controlador.td = 0;
+                    app.TEditField.Enable = 'on';
+                case tipos{3}
+                    app.controlador.ti = 0;
+                    app.controlador.td = app.TEditField.Value;
+                    app.TEditField.Enable = 'on';
+            end
+        end
+
+        function toWorkspace(app)
+            % Controlador
+            assignin('base','P',app.controlador.kp)
+            assignin('base','I',app.controlador.ti)
+            assignin('base','D',app.controlador.td)
+            % Actuador
+            assignin('base','ka',app.actuador.ka)
+            assignin('base','a1',app.actuador.a1)
+            assignin('base','a2',app.actuador.a2)
+            % Planta
+            assignin('base','Ld',app.planta.ld)
+            assignin('base','Lp',app.planta.lp)
+            % Sensor
+            assignin('base','ks',app.sensor.ks)
+            assignin('base','b1',app.sensor.b1)
+            assignin('base','b2',app.sensor.b2)
+            % Perturbaciones
+            assignin('base','kop',app.perturbaciones.viento.kop)
+            assignin('base','N',app.perturbaciones.turbulencia.N)
+            % Señal de entrada
+            assignin('base','in',app.configTiempo.entradaTag)
+            assignin('base','data',app.configTiempo.dataConsigna)
+            assignin('base','muestreo',app.configTiempo.muestreoConsigna)
+        end
+
+        function [tiempo,consigna,real] = simulink(~,simulinkModel)
+            % Conexión con Simulink
+            simOut = sim(simulinkModel);
+            % Respuesta de Simulink
+            tiempo = simOut.anguloEntrada.Time;             % Vector de tiempo
+            consigna = simOut.anguloEntrada.Data;           % Ángulo de balanceo ideal
+            real = simOut.anguloSalida.Data;                % Ángulo de balanceo real
+            %viento = simOut.perturbaciones.Data;            % Ráfaga de viento
+        end
+
+        function senalEntrada(app)
+            value = app.SealdeentradaDropDown.Value;
+            entradas = {'Escalón unitario','Rampa unitaria','Parábola','Impulso','Pulso periódico'};
+            app.PeriodosegEditField.Enable = 'off';
+            app.rtEditField.Enable = 'off';
+            app.matButton.Enable = 'off';
+            switch value
+                case entradas{1}
+                    app.configTiempo.entradaTag = 1;
+                case entradas{2}
+                    app.configTiempo.entradaTag = 3;
+                case entradas{3}
+                    app.configTiempo.entradaTag = 4;
+                case entradas{4}
+                    app.configTiempo.entradaTag = 2;
+                case entradas{5}
+                    app.configTiempo.entradaTag = 5;
+                    app.PeriodosegEditField.Enable = 'on';
+                    app.rtEditField.Enable = 'on';
+                    app.matButton.Enable = 'on';
+            end
+        end
+
+        function [sys,sys1] = transferFunc(app)
+            % Funciones de transferencia por bloque
+            numControlador = [app.controlador.td 1 app.controlador.ti]*app.controlador.kp;
+            denControlador = [1 0];
+            controladorTf = tf(numControlador,denControlador);
+            actuadorTf = tf([app.actuador.ka],[app.actuador.a1 app.actuador.a2]);
+            plantaTf = tf([app.planta.ld],[1 app.planta.lp 0]);
+            sensorTf = tf([app.sensor.ks],[app.sensor.b1 app.sensor.b2]);
+            % Función de transferencia global
+            G = controladorTf*actuadorTf*plantaTf;          % G(s) = X(s)*A(s)*P(s)
+            H = sensorTf;                                   % H(s) = S(s)
+            sys = feedback(G,H);                            % Función de transferencia de lazo cerrado
+            sys1 = G*H;                                     % Función de transferencia de lazo abierto
+            assignin('base','sys1',sys1)
+        end
+
+        function [sys,sys1,value1,value2] = runSingleMultiple(app,j)
+
+            %% Datos del controlador
+            tipoControlador(app,j)
+
+            %% Función de transferencia del sistema
+            [sys,sys1] = transferFunc(app);
+
+            %% Señal de entrada
+            senalEntrada(app)
+
+            %% Parámetros al Workspace
+            toWorkspace(app)
+
+            %% Conexión con simulink
+            [tiempo,consigna,real] = simulink(app,'ProyectoIntegrador_Diagrama.slx');
+
+            %% Respuesta temporal
+            if j == 1
+                plot(app.axesTemporal,tiempo,consigna,'Color',app.coloresRGB{1},'LineStyle','--', ...
+                    'DisplayName','Consigna','LineWidth',1.5)
+            end
+            hold(app.axesTemporal,'on')
+            label = join(['\Phi(kp=',num2str(app.controlador.kp),')']);
+            plot(app.axesTemporal,tiempo,real,'Color',app.coloresRGB{j+1},'LineStyle','-', ...
+                'DisplayName',label,'LineWidth',1.5);
+
+            %% Parámetros respuesta temporal (entrada escalón)
+            value1 = parametrosTiempo(app,tiempo,real,consigna);
+
+            %% Respuesta en frecuencia
+            w = logspace(-2,6,100);                         % Rango de frecuencias
+            [mag,phase,w] = bode(sys1,w);
+            magDb = zeros(length(w),1);
+            phaseDb = zeros(length(w),1);
+            for i = 1 : length(w)
+                magDb(i) = 20*log10(mag(1,1,i));
+                phaseDb(i) = phase(1,1,i);
+            end
+            % Diagrama de Bode de magnitud
+            semilogx(app.bodeMagAxes,w,magDb,'LineWidth',1.5,'Color',app.coloresRGB{j+1})
+            hold(app.bodeMagAxes,'on')
+            % Diagrama de Bode de fase
+            semilogx(app.bodeFaseAxes,w,phaseDb,'LineWidth',1.5,'Color',app.coloresRGB{j+1})
+            hold(app.bodeFaseAxes,'on')
+
+            %% Parámetros de la respuesta en frecuencia
+            value2 = parametrosFrecuencia(app,w,sys1);
+
+        end
+
+        function value = parametrosTiempo(~,t,y,ref)
+            infoTiempo = stepinfo(y,t);
+            tr = infoTiempo.RiseTime;
+            ts = infoTiempo.SettlingTime;
+            mp = infoTiempo.Overshoot;
+            tp = infoTiempo.PeakTime;
+            ess = abs(ref(end) - y(end));
+            value = [ess tr ts mp tp];
+        end
+
+        function value2 = parametrosFrecuencia(~,w,G)
+            BW = bandwidth(G);
+            fc = BW - w(1);
+            [Gm,Pm] = margin(G);
+            [gpeak,fpeak] = getPeakGain(G);
+            [Gnum,Gden] = tfdata(G);
+            syms S
+            GnumSym = poly2sym(Gnum,S);
+            GdenSym = poly2sym(Gden,S);
+            Gsym = GnumSym/GdenSym;
+            kp = double(limit(Gsym,S,0));
+            kv = double(limit(S*Gsym,S,0));
+            value2 = [fc BW kp kv 20*log10(Gm) Pm gpeak fpeak];
+        end
+
+        function plotTablasInfo(app,indices,tabla,axes)
+            rows = tabla.Data(indices(:,1),:);
+            y = rows(:,indices(1,2));
+            x = str2num(app.multiKp.Value);
+            app.configPanel.Enable
+            switch app.configPanel.Enable
+                case 'on'
+                    xq = linspace(x(1),x(end),200);
+                    yq = interp1(x,y,xq);
+                case 'off'
+                    xq = x;
+                    yq = y;
+            end
+            plot(axes,x,y,'b-*',xq,yq,'m--')
+        end
+
+        function rlocusopt(~,h)
+            p = getoptions(h);
+            p.Title.String = '';
+            p.XLabel.String = 'Eje real';
+            p.XLabel.FontSize = 10;
+            p.YLabel.String = 'Eje imaginario';
+            p.YLabel.FontSize = 10;
+            p.GridColor = [0.15 0.15 0.15 0.15];
+            p.Grid = 'on';
+            setoptions(h,p)
+        end
+
+        function regionEstabilidad(app,delta)
+            xaxis = linspace(-100,100,delta);    % Kp
+            yaxis = linspace(-100,100,delta);  % Td o Ti
+
+            [x,y] = meshgrid(xaxis,yaxis);
+
+            e1 = app.actuador.a1*app.sensor.b1;
+            e11 = app.actuador.a1*app.sensor.b2;
+            e12 = app.actuador.a2*app.sensor.b1;
+            e13 = app.actuador.a2*app.sensor.b2;
+            e2 = e11 + e1*app.planta.lp + e12;
+            e3 = e11*app.planta.lp + e13 + e12*app.planta.lp;
+            e4 = e13*app.planta.lp;
+            e5 = app.actuador.ka*app.sensor.ks*app.planta.ld;
+
+            tipos = {'Proporcional','Integral','Derivativo'};
+            % Algunas variables
+            d1 = app.actuador.a2*app.planta.lp;
+            d2 = app.actuador.a1*app.planta.lp+app.actuador.a2;
+            d3 = app.sensor.ks*app.actuador.a1*app.actuador.ka*app.planta.ld;
+            switch app.controlador.tipo
+                case tipos{1}
+                    sigma1 = (e2*e3 - e1*e4)/(e2);
+                    lim = (sigma1*e4)/(e2*e5);
+                    p = plot(app.regionEstAxes,[0 lim],[0 0], ...
+                        'LineWidth',6,'Color',[0.98,0.99,0.27],'Marker','o');
+                    p.DataTipTemplate.DataTipRows(1).Label = 'kp (proporcionalidad)';
+                    p.DataTipTemplate.DataTipRows(2).Label = 'T (constante de tiempo)';
+                    datatip(p,lim,0);
+                    datatip(p,0,0);
+                case tipos{2}
+                    % Rango de kp
+                    lmaxkp = (d1*d2)/(d3);
+                    limkp = [0 ; lmaxkp];
+                    % Rango de ti
+                    lminti = (d2^2)./(d1*d2-x*e5);
+                    % Inecuaciones
+                    ineq1 = (x>limkp(1,:)) & (x<limkp(2,:));
+                    ineq2 = (y>lminti) & (y<inf);
+                    ineq = double(ineq1 & ineq2);
+                    s = pcolor(app.regionEstAxes,x,y,ineq);
+                    s.FaceColor = 'interp';
+                    s.FaceAlpha = 0.8;
+                    s.EdgeColor = 'none';
+                    view(app.regionEstAxes,0,90)
+                    xlim(app.regionEstAxes,[limkp(1,:)-5 limkp(2,:)+5])
+                    ylim(app.regionEstAxes,[(d2^2)./(d1*d2)-5 20])
+                case tipos{3}
+                    % Rango de td
+                    lmintd = -d1*app.actuador.a1./(d3*x)+app.actuador.a1/d2;
+                    % Inecuaciones
+                    ineq1 = (x>0) & (x<inf);
+                    ineq2 = (y>lmintd) & (y<inf);
+                    ineq = double(ineq1 & ineq2);
+                    s = pcolor(app.regionEstAxes,x,y,ineq);
+                    s.FaceColor = 'interp';
+                    s.FaceAlpha = 0.8;
+                    s.EdgeColor = 'none';
+                    view(app.regionEstAxes,0,90)
+                    xlim(app.regionEstAxes,[-5 20])
+                    ylim(app.regionEstAxes,[-e1*app.actuador.a1./(e3)-5 20])
+            end
+        end
+    end
+
+
+    % Callbacks that handle component events
+    methods (Access = private)
+
+        % Value changed function: RespuestaamltiplescontroladoresSwitch
+        function MultiControladorSwitch(app, event)
+            value = app.RespuestaamltiplescontroladoresSwitch.Value;
+            items = app.RespuestaamltiplescontroladoresSwitch.Items;
+            switch value
+                case items{1}
+                    app.configPanel.Enable = 'off';
+                    app.multiplotSwitch = false;
+                    app.k_pEditField.Enable = 'on';
+                case items{2}
+                    app.configPanel.Enable = 'on';
+                    app.multiplotSwitch = true;
+                    app.k_pEditField.Enable = 'off';
+            end
+        end
+
+        % Selection changed function: configPanel
+        function MultiControladorConfig(app, event)
+            selection = app.configPanel.SelectedObject.Tag;
+            tags = {'random','manual'};
+            switch selection
+                case tags{1}
+                    app.multiKp.Enable = 'off';
+                case tags{2}
+                    app.multiKp.Enable = 'on';
+            end
+        end
+
+        % Button pushed function: SimularsistemaButton
+        function SimularsistemaButtonPushed(app, event)
+            cla(app.axesTemporal)
+            cla(app.bodeFaseAxes)
+            cla(app.bodeMagAxes)
+            cla(app.rootLocusAxes)
+
+            %% Recolección de variables de usuario generales
+            % Actuador
+            app.actuador.ka = app.k_aEditField.Value;       % Ganancia
+            app.actuador.a1 = app.a_1EditField.Value;       % Factor de primer orden
+            app.actuador.a2 = app.a_2EditField.Value;       % Factor de orden cero
+            % Planta
+            app.planta.ld = app.L_deltaEditField.Value;     % Momento por deflección
+            app.planta.lp = app.L_pEditField.Value;         % Momento de amortiguación
+            % Sensor
+            app.sensor.ks = app.k_sEditField.Value;         % Ganancia
+            app.sensor.b1 = app.b_1EditField.Value;         % Factor de primer orden
+            app.sensor.b2 = app.b_2EditField.Value;         % Factor de orden cero
+            % Perturbaciones
+            % Ráfaga de viento
+            value = app.RfagadevientoCheckBox.Value;
+            app.perturbaciones.viento.kop = value*app.Magnitudk_osEditField.Value;
+            value = app.TurbulenciaCheckBox.Value; % Turbulencia
+            app.perturbaciones.turbulencia.N = value*app.PotenciaNEditField.Value;
+            % Serie de consignas
+            app.configTiempo.dataConsigna = str2num(app.rtEditField.Value);
+            app.configTiempo.muestreoConsigna = app.PeriodosegEditField.Value;
+
+            %% Verifica si está habilitado el modo de múltiples controladores
+            if app.multiplotSwitch
+
+                LK = str2num(app.multiKp.Value);
+                rowsNames = string(zeros(1,length(LK)));
+                rowsValue1 = zeros(length(LK),5);
+                rowsValue2 = zeros(length(LK),8);
+                LKlength = length(LK);
+
+                for i = 1 : length(LK)
+                    [sys,sys1,value1,value2] = runSingleMultiple(app,i);
+
+                    sys_ss = ss(sys);
+                    sys_ss.Name = 'SS lazzo cerrado';
+                    tf_str(i) = convertCharsToStrings(evalc('sys'));
+                    tfol_str(i) = convertCharsToStrings(evalc('sys1'));
+                    ss_str(i) = convertCharsToStrings(evalc('sys_ss'));
+
+                    rowsNames(i) = join(['kp=',num2str(app.controlador.kp)]);
+                    rowsValue1(i,:) = value1;
+                    rowsValue2(i,:) = value2;
+                end
+
+            else % Único controlador
+                LKlength = 1;
+                [sys,sys1,value1,value2] = runSingleMultiple(app,1);
+                
+                sys_ss = ss(sys);
+                sys_ss.Name = 'Lazo cerrado';
+                tf_str = convertCharsToStrings(evalc('sys'));
+                tfol_str = convertCharsToStrings(evalc('sys1'));
+                ss_str = convertCharsToStrings(evalc('sys_ss'));
+
+                rowsNames = join(['kp=',num2str(app.controlador.kp)]);
+                rowsValue1 = value1;
+                rowsValue2 = value2;
+            end
+
+            enableDefaultInteractivity(app.axesTemporal)
+            app.axesTemporal.Toolbar.Visible = 'on';
+
+            app.TFTextArea.Value = tf_str;
+            app.FuncindetransferenciadelazoabiertoTextArea.Value = tfol_str;
+            app.TFTextArea_2.Value = ss_str;
+            legend(app.axesTemporal,'Location','southeast','NumColumns',LKlength)
+
+            app.infoTempoTabla.RowName = rowsNames;
+            app.infoTempoTabla.Data = rowsValue1;
+            app.infoFrecTabla.RowName = rowsNames;
+            app.infoFrecTabla.Data = rowsValue2;
+
+            % Lugar de las raíces
+            h = rlocusplot(app.rootLocusAxes,sys1/app.controlador.kp,'b');
+            rlocusopt(app,h)
+
+            % Región de estabilidad
+            regionEstabilidad(app,100)
+        end
+
+        % Value changed function: TipoDropDown
+        function TipoDropDownValueChanged(app, event)
+            tipoControlador(app,1)
+        end
+
+        % Callback function
+        function entradaDropDown(app, event)
+            senalEntrada(app)
+        end
+
+        % Value changed function: RfagadevientoCheckBox
+        function RfagadevientoCheckBoxValueChanged(app, event)
+            value = app.RfagadevientoCheckBox.Value;
+            app.perturbaciones.viento.kop = value*app.Magnitudk_osEditField.Value;
+            switch value
+                case 1
+                    app.Magnitudk_osEditField.Enable = 'on';
+                case 0
+                    app.Magnitudk_osEditField.Enable = 'off';
+            end
+        end
+
+        % Value changed function: TurbulenciaCheckBox
+        function TurbulenciaCheckBoxValueChanged(app, event)
+            value = app.TurbulenciaCheckBox.Value;
+            app.perturbaciones.turbulencia.N = value*app.PotenciaNEditField.Value;
+            switch value
+                case 1
+                    app.PotenciaNEditField.Enable = 'on';
+                case 0
+                    app.PotenciaNEditField.Enable = 'off';
+            end
+        end
+
+        % Cell selection callback: infoFrecTabla
+        function infoFrecTablaCellSelection(app, event)
+            indices = event.Indices;
+            plotTablasInfo(app,indices,app.infoFrecTabla,app.infoFrecAxes)
+        end
+
+        % Cell selection callback: infoTempoTabla
+        function infoTempoTablaCellSelection(app, event)
+            indices = event.Indices;
+            plotTablasInfo(app,indices,app.infoTempoTabla,app.infoTempoAxes)
+        end
+
+        % Changes arrangement of the app based on UIFigure width
+        function updateAppLayout(app, event)
+            currentFigureWidth = app.UIFigure.Position(3);
+            if(currentFigureWidth <= app.onePanelWidth)
+                % Change to a 3x1 grid
+                app.GridLayout.RowHeight = {838, 838, 838};
+                app.GridLayout.ColumnWidth = {'1x'};
+                app.CenterPanel.Layout.Row = 1;
+                app.CenterPanel.Layout.Column = 1;
+                app.LeftPanel.Layout.Row = 2;
+                app.LeftPanel.Layout.Column = 1;
+                app.RightPanel.Layout.Row = 3;
+                app.RightPanel.Layout.Column = 1;
+            elseif (currentFigureWidth > app.onePanelWidth && currentFigureWidth <= app.twoPanelWidth)
+                % Change to a 2x2 grid
+                app.GridLayout.RowHeight = {838, 838};
+                app.GridLayout.ColumnWidth = {'1x', '1x'};
+                app.CenterPanel.Layout.Row = 1;
+                app.CenterPanel.Layout.Column = [1,2];
+                app.LeftPanel.Layout.Row = 2;
+                app.LeftPanel.Layout.Column = 1;
+                app.RightPanel.Layout.Row = 2;
+                app.RightPanel.Layout.Column = 2;
+            else
+                % Change to a 1x3 grid
+                app.GridLayout.RowHeight = {'1x'};
+                app.GridLayout.ColumnWidth = {352, '1x', 581};
+                app.LeftPanel.Layout.Row = 1;
+                app.LeftPanel.Layout.Column = 1;
+                app.CenterPanel.Layout.Row = 1;
+                app.CenterPanel.Layout.Column = 2;
+                app.RightPanel.Layout.Row = 1;
+                app.RightPanel.Layout.Column = 3;
+            end
+        end
+
+        % Value changing function: DeltaSlider
+        function DeltaSliderValueChanging(app, event)
+            changingValue = event.Value;
+            regionEstabilidad(app,changingValue)
+        end
+
+        % Value changed function: SealdeentradaDropDown
+        function SealdeentradaDropDownValueChanged(app, event)
+            senalEntrada(app)
+        end
+    end
+
+    % Component initialization
+    methods (Access = private)
+
+        % Create UIFigure and components
+        function createComponents(app)
+
+            % Get the file path for locating images
+            pathToMLAPP = fileparts(mfilename('fullpath'));
+
+            % Create UIFigure and hide until all components are created
+            app.UIFigure = uifigure('Visible', 'off');
+            app.UIFigure.AutoResizeChildren = 'off';
+            app.UIFigure.Color = [0.9412 0.9412 0.9412];
+            app.UIFigure.Position = [100 100 1768 838];
+            app.UIFigure.Name = 'MATLAB App';
+            app.UIFigure.SizeChangedFcn = createCallbackFcn(app, @updateAppLayout, true);
+
+            % Create GridLayout
+            app.GridLayout = uigridlayout(app.UIFigure);
+            app.GridLayout.ColumnWidth = {352, '1x', 581};
+            app.GridLayout.RowHeight = {'1x'};
+            app.GridLayout.ColumnSpacing = 0;
+            app.GridLayout.RowSpacing = 0;
+            app.GridLayout.Padding = [0 0 0 0];
+            app.GridLayout.Scrollable = 'on';
+
+            % Create LeftPanel
+            app.LeftPanel = uipanel(app.GridLayout);
+            app.LeftPanel.BackgroundColor = [0.9412 0.9412 0.9412];
+            app.LeftPanel.Layout.Row = 1;
+            app.LeftPanel.Layout.Column = 1;
+
+            % Create GridLayoutLeft
+            app.GridLayoutLeft = uigridlayout(app.LeftPanel);
+            app.GridLayoutLeft.ColumnWidth = {'1x'};
+            app.GridLayoutLeft.RowHeight = {40, 180, 180, '1x', 140};
+            app.GridLayoutLeft.BackgroundColor = [0.9412 0.9412 0.9412];
+
+            % Create DiagramaBloquesImage
+            app.DiagramaBloquesImage = uiimage(app.GridLayoutLeft);
+            app.DiagramaBloquesImage.BackgroundColor = [0.9412 0.9412 0.9412];
+            app.DiagramaBloquesImage.Layout.Row = 2;
+            app.DiagramaBloquesImage.Layout.Column = 1;
+            app.DiagramaBloquesImage.ImageSource = fullfile(pathToMLAPP, 'Diagrama de bloques P4.JPG');
+
+            % Create TFySsPanel
+            app.TFySsPanel = uitabgroup(app.GridLayoutLeft);
+            app.TFySsPanel.Layout.Row = 4;
+            app.TFySsPanel.Layout.Column = 1;
+
+            % Create FuncindetransferenciadelazocerradoTab
+            app.FuncindetransferenciadelazocerradoTab = uitab(app.TFySsPanel);
+            app.FuncindetransferenciadelazocerradoTab.Title = 'Función de transferencia de lazo cerrado';
+
+            % Create GridLayout7
+            app.GridLayout7 = uigridlayout(app.FuncindetransferenciadelazocerradoTab);
+            app.GridLayout7.ColumnWidth = {'1x'};
+            app.GridLayout7.RowHeight = {'1x'};
+
+            % Create TFTextArea
+            app.TFTextArea = uitextarea(app.GridLayout7);
+            app.TFTextArea.FontName = 'Monospaced';
+            app.TFTextArea.FontSize = 14;
+            app.TFTextArea.Layout.Row = 1;
+            app.TFTextArea.Layout.Column = 1;
+
+            % Create EspaciodeestadosTab
+            app.EspaciodeestadosTab = uitab(app.TFySsPanel);
+            app.EspaciodeestadosTab.Title = 'Espacio de estados';
+
+            % Create TFTextArea_2
+            app.TFTextArea_2 = uitextarea(app.EspaciodeestadosTab);
+            app.TFTextArea_2.FontName = 'Monospaced';
+            app.TFTextArea_2.FontSize = 14;
+            app.TFTextArea_2.Position = [8 12 308 191];
+
+            % Create multipleControlPanel
+            app.multipleControlPanel = uipanel(app.GridLayoutLeft);
+            app.multipleControlPanel.Layout.Row = 5;
+            app.multipleControlPanel.Layout.Column = 1;
+
+            % Create RespuestaamltiplescontroladoresSwitchLabel
+            app.RespuestaamltiplescontroladoresSwitchLabel = uilabel(app.multipleControlPanel);
+            app.RespuestaamltiplescontroladoresSwitchLabel.HorizontalAlignment = 'center';
+            app.RespuestaamltiplescontroladoresSwitchLabel.Position = [10 107 201 22];
+            app.RespuestaamltiplescontroladoresSwitchLabel.Text = 'Respuesta a múltiples controladores';
+
+            % Create RespuestaamltiplescontroladoresSwitch
+            app.RespuestaamltiplescontroladoresSwitch = uiswitch(app.multipleControlPanel, 'slider');
+            app.RespuestaamltiplescontroladoresSwitch.ValueChangedFcn = createCallbackFcn(app, @MultiControladorSwitch, true);
+            app.RespuestaamltiplescontroladoresSwitch.Position = [244 109 45 20];
+
+            % Create configPanel
+            app.configPanel = uibuttongroup(app.multipleControlPanel);
+            app.configPanel.SelectionChangedFcn = createCallbackFcn(app, @MultiControladorConfig, true);
+            app.configPanel.Enable = 'off';
+            app.configPanel.Position = [11 37 310 62];
+
+            % Create AutoButton
+            app.AutoButton = uiradiobutton(app.configPanel);
+            app.AutoButton.Tag = 'random';
+            app.AutoButton.Text = 'Auto';
+            app.AutoButton.Position = [11 35 47 22];
+
+            % Create ManualButton
+            app.ManualButton = uiradiobutton(app.configPanel);
+            app.ManualButton.Tag = 'manual';
+            app.ManualButton.Text = 'Manual:';
+            app.ManualButton.Position = [11 9 65 22];
+            app.ManualButton.Value = true;
+
+            % Create k_pLabel
+            app.k_pLabel = uilabel(app.configPanel);
+            app.k_pLabel.Interpreter = 'latex';
+            app.k_pLabel.HorizontalAlignment = 'right';
+            app.k_pLabel.Position = [81 9 45 22];
+            app.k_pLabel.Text = '$[k_p]=$';
+
+            % Create multiKp
+            app.multiKp = uieditfield(app.configPanel, 'text');
+            app.multiKp.Position = [141 9 159 22];
+            app.multiKp.Value = '0.063 0.1 0.87 3';
+
+            % Create SimularsistemaButton
+            app.SimularsistemaButton = uibutton(app.multipleControlPanel, 'push');
+            app.SimularsistemaButton.ButtonPushedFcn = createCallbackFcn(app, @SimularsistemaButtonPushed, true);
+            app.SimularsistemaButton.Icon = 'running-solid.svg';
+            app.SimularsistemaButton.BackgroundColor = [0 1 0];
+            app.SimularsistemaButton.FontWeight = 'bold';
+            app.SimularsistemaButton.Position = [11 7 310 22];
+            app.SimularsistemaButton.Text = 'Simular sistema';
+
+            % Create BloquesDefTab
+            app.BloquesDefTab = uitabgroup(app.GridLayoutLeft);
+            app.BloquesDefTab.TabLocation = 'left';
+            app.BloquesDefTab.Layout.Row = 3;
+            app.BloquesDefTab.Layout.Column = 1;
+
+            % Create ControladorTab
+            app.ControladorTab = uitab(app.BloquesDefTab);
+            app.ControladorTab.Title = 'Controlador';
+
+            % Create GridLayout14
+            app.GridLayout14 = uigridlayout(app.ControladorTab);
+            app.GridLayout14.ColumnWidth = {50, '2x'};
+            app.GridLayout14.RowHeight = {'1x', '1x', '1x', 45};
+            app.GridLayout14.ColumnSpacing = 9.25;
+            app.GridLayout14.Padding = [9.25 10 9.25 10];
+
+            % Create TipoDropDownLabel
+            app.TipoDropDownLabel = uilabel(app.GridLayout14);
+            app.TipoDropDownLabel.HorizontalAlignment = 'center';
+            app.TipoDropDownLabel.Layout.Row = 1;
+            app.TipoDropDownLabel.Layout.Column = 1;
+            app.TipoDropDownLabel.Text = 'Tipo';
+
+            % Create TipoDropDown
+            app.TipoDropDown = uidropdown(app.GridLayout14);
+            app.TipoDropDown.Items = {'Proporcional', 'Integral', 'Derivativo'};
+            app.TipoDropDown.ValueChangedFcn = createCallbackFcn(app, @TipoDropDownValueChanged, true);
+            app.TipoDropDown.Layout.Row = 1;
+            app.TipoDropDown.Layout.Column = 2;
+            app.TipoDropDown.Value = 'Proporcional';
+
+            % Create k_pEditFieldLabel
+            app.k_pEditFieldLabel = uilabel(app.GridLayout14);
+            app.k_pEditFieldLabel.Interpreter = 'latex';
+            app.k_pEditFieldLabel.HorizontalAlignment = 'right';
+            app.k_pEditFieldLabel.Layout.Row = 2;
+            app.k_pEditFieldLabel.Layout.Column = 1;
+            app.k_pEditFieldLabel.Text = '$k_p=$';
+
+            % Create k_pEditField
+            app.k_pEditField = uieditfield(app.GridLayout14, 'numeric');
+            app.k_pEditField.Layout.Row = 2;
+            app.k_pEditField.Layout.Column = 2;
+            app.k_pEditField.Value = 2;
+
+            % Create TEditFieldLabel
+            app.TEditFieldLabel = uilabel(app.GridLayout14);
+            app.TEditFieldLabel.Interpreter = 'latex';
+            app.TEditFieldLabel.HorizontalAlignment = 'right';
+            app.TEditFieldLabel.Layout.Row = 3;
+            app.TEditFieldLabel.Layout.Column = 1;
+            app.TEditFieldLabel.Text = '$T=$';
+
+            % Create TEditField
+            app.TEditField = uieditfield(app.GridLayout14, 'numeric');
+            app.TEditField.Enable = 'off';
+            app.TEditField.Layout.Row = 3;
+            app.TEditField.Layout.Column = 2;
+            app.TEditField.Value = 5;
+
+            % Create k_pleft1frac1sT_isT_drightLabel
+            app.k_pleft1frac1sT_isT_drightLabel = uilabel(app.GridLayout14);
+            app.k_pleft1frac1sT_isT_drightLabel.Interpreter = 'latex';
+            app.k_pleft1frac1sT_isT_drightLabel.FontSize = 14;
+            app.k_pleft1frac1sT_isT_drightLabel.Layout.Row = 4;
+            app.k_pleft1frac1sT_isT_drightLabel.Layout.Column = 2;
+            app.k_pleft1frac1sT_isT_drightLabel.Text = '$k_{p}\left(1+\frac{1}{sT_i}+sT_d\right)$';
+
+            % Create XsLabel
+            app.XsLabel = uilabel(app.GridLayout14);
+            app.XsLabel.Interpreter = 'latex';
+            app.XsLabel.HorizontalAlignment = 'right';
+            app.XsLabel.FontSize = 14;
+            app.XsLabel.Layout.Row = 4;
+            app.XsLabel.Layout.Column = 1;
+            app.XsLabel.Text = '$X(s)=$';
+
+            % Create ServomotordealernTab
+            app.ServomotordealernTab = uitab(app.BloquesDefTab);
+            app.ServomotordealernTab.Title = 'Servomotor de alerón';
+
+            % Create GridLayout13
+            app.GridLayout13 = uigridlayout(app.ServomotordealernTab);
+            app.GridLayout13.ColumnWidth = {50, '1x'};
+            app.GridLayout13.RowHeight = {'1x', '1x', '1x', 45};
+
+            % Create k_aEditField
+            app.k_aEditField = uieditfield(app.GridLayout13, 'numeric');
+            app.k_aEditField.Layout.Row = 1;
+            app.k_aEditField.Layout.Column = 2;
+            app.k_aEditField.Value = 2;
+
+            % Create k_aEditFieldLabel
+            app.k_aEditFieldLabel = uilabel(app.GridLayout13);
+            app.k_aEditFieldLabel.Interpreter = 'latex';
+            app.k_aEditFieldLabel.HorizontalAlignment = 'right';
+            app.k_aEditFieldLabel.Layout.Row = 1;
+            app.k_aEditFieldLabel.Layout.Column = 1;
+            app.k_aEditFieldLabel.Text = '$k_a=$';
+
+            % Create a_1EditField
+            app.a_1EditField = uieditfield(app.GridLayout13, 'numeric');
+            app.a_1EditField.Layout.Row = 3;
+            app.a_1EditField.Layout.Column = 2;
+            app.a_1EditField.Value = 1;
+
+            % Create a_1EditFieldLabel
+            app.a_1EditFieldLabel = uilabel(app.GridLayout13);
+            app.a_1EditFieldLabel.Interpreter = 'latex';
+            app.a_1EditFieldLabel.HorizontalAlignment = 'right';
+            app.a_1EditFieldLabel.Layout.Row = 3;
+            app.a_1EditFieldLabel.Layout.Column = 1;
+            app.a_1EditFieldLabel.Text = '$a_1=$';
+
+            % Create a_2EditField
+            app.a_2EditField = uieditfield(app.GridLayout13, 'numeric');
+            app.a_2EditField.Layout.Row = 2;
+            app.a_2EditField.Layout.Column = 2;
+            app.a_2EditField.Value = 10;
+
+            % Create a_2EditFieldLabel
+            app.a_2EditFieldLabel = uilabel(app.GridLayout13);
+            app.a_2EditFieldLabel.Interpreter = 'latex';
+            app.a_2EditFieldLabel.HorizontalAlignment = 'right';
+            app.a_2EditFieldLabel.Layout.Row = 2;
+            app.a_2EditFieldLabel.Layout.Column = 1;
+            app.a_2EditFieldLabel.Text = '$a_2=$';
+
+            % Create frack_aa_1sa_2Label
+            app.frack_aa_1sa_2Label = uilabel(app.GridLayout13);
+            app.frack_aa_1sa_2Label.Interpreter = 'latex';
+            app.frack_aa_1sa_2Label.FontSize = 14;
+            app.frack_aa_1sa_2Label.Layout.Row = 4;
+            app.frack_aa_1sa_2Label.Layout.Column = 2;
+            app.frack_aa_1sa_2Label.Text = '$\frac{k_a}{a_{1}s+a_2}$';
+
+            % Create AsLabel
+            app.AsLabel = uilabel(app.GridLayout13);
+            app.AsLabel.Interpreter = 'latex';
+            app.AsLabel.HorizontalAlignment = 'right';
+            app.AsLabel.FontSize = 14;
+            app.AsLabel.Layout.Row = 4;
+            app.AsLabel.Layout.Column = 1;
+            app.AsLabel.Text = '$A(s)=$';
+
+            % Create DinmicadebalanceoTab
+            app.DinmicadebalanceoTab = uitab(app.BloquesDefTab);
+            app.DinmicadebalanceoTab.Title = 'Dinámica de balanceo';
+
+            % Create GridLayout15
+            app.GridLayout15 = uigridlayout(app.DinmicadebalanceoTab);
+            app.GridLayout15.ColumnWidth = {50, '1x'};
+            app.GridLayout15.RowHeight = {'1x', '1x', '1x', 45};
+
+            % Create L_deltaEditField
+            app.L_deltaEditField = uieditfield(app.GridLayout15, 'numeric');
+            app.L_deltaEditField.Layout.Row = 1;
+            app.L_deltaEditField.Layout.Column = 2;
+            app.L_deltaEditField.Value = 2;
+
+            % Create L_deltaEditFieldLabel
+            app.L_deltaEditFieldLabel = uilabel(app.GridLayout15);
+            app.L_deltaEditFieldLabel.Interpreter = 'latex';
+            app.L_deltaEditFieldLabel.HorizontalAlignment = 'right';
+            app.L_deltaEditFieldLabel.Layout.Row = 1;
+            app.L_deltaEditFieldLabel.Layout.Column = 1;
+            app.L_deltaEditFieldLabel.Text = '$L_\delta=$';
+
+            % Create L_pEditField
+            app.L_pEditField = uieditfield(app.GridLayout15, 'numeric');
+            app.L_pEditField.Layout.Row = 2;
+            app.L_pEditField.Layout.Column = 2;
+            app.L_pEditField.Value = 0.5;
+
+            % Create L_pEditFieldLabel
+            app.L_pEditFieldLabel = uilabel(app.GridLayout15);
+            app.L_pEditFieldLabel.Interpreter = 'latex';
+            app.L_pEditFieldLabel.HorizontalAlignment = 'right';
+            app.L_pEditFieldLabel.Layout.Row = 2;
+            app.L_pEditFieldLabel.Layout.Column = 1;
+            app.L_pEditFieldLabel.Text = '$L_p=$';
+
+            % Create fracL_deltassL_pLabel
+            app.fracL_deltassL_pLabel = uilabel(app.GridLayout15);
+            app.fracL_deltassL_pLabel.Interpreter = 'latex';
+            app.fracL_deltassL_pLabel.FontSize = 14;
+            app.fracL_deltassL_pLabel.Layout.Row = 4;
+            app.fracL_deltassL_pLabel.Layout.Column = 2;
+            app.fracL_deltassL_pLabel.Text = '$\frac{L_{\delta}}{s(s+L_p)}$';
+
+            % Create PsLabel
+            app.PsLabel = uilabel(app.GridLayout15);
+            app.PsLabel.Interpreter = 'latex';
+            app.PsLabel.HorizontalAlignment = 'right';
+            app.PsLabel.FontSize = 14;
+            app.PsLabel.Layout.Row = 4;
+            app.PsLabel.Layout.Column = 1;
+            app.PsLabel.Text = '$P(s)=$';
+
+            % Create GiroscopioTab
+            app.GiroscopioTab = uitab(app.BloquesDefTab);
+            app.GiroscopioTab.Title = 'Giroscopio';
+
+            % Create GridLayout16
+            app.GridLayout16 = uigridlayout(app.GiroscopioTab);
+            app.GridLayout16.ColumnWidth = {50, '1x'};
+            app.GridLayout16.RowHeight = {'1x', '1x', '1x', 45};
+
+            % Create k_sEditField
+            app.k_sEditField = uieditfield(app.GridLayout16, 'numeric');
+            app.k_sEditField.Layout.Row = 1;
+            app.k_sEditField.Layout.Column = 2;
+            app.k_sEditField.Value = 1;
+
+            % Create k_sEditFieldLabel
+            app.k_sEditFieldLabel = uilabel(app.GridLayout16);
+            app.k_sEditFieldLabel.Interpreter = 'latex';
+            app.k_sEditFieldLabel.HorizontalAlignment = 'right';
+            app.k_sEditFieldLabel.Layout.Row = 1;
+            app.k_sEditFieldLabel.Layout.Column = 1;
+            app.k_sEditFieldLabel.Text = '$k_s=$';
+
+            % Create b_1EditField
+            app.b_1EditField = uieditfield(app.GridLayout16, 'numeric');
+            app.b_1EditField.Layout.Row = 3;
+            app.b_1EditField.Layout.Column = 2;
+
+            % Create b_1EditFieldLabel
+            app.b_1EditFieldLabel = uilabel(app.GridLayout16);
+            app.b_1EditFieldLabel.Interpreter = 'latex';
+            app.b_1EditFieldLabel.HorizontalAlignment = 'right';
+            app.b_1EditFieldLabel.Layout.Row = 3;
+            app.b_1EditFieldLabel.Layout.Column = 1;
+            app.b_1EditFieldLabel.Text = '$b_1=$';
+
+            % Create b_2EditField
+            app.b_2EditField = uieditfield(app.GridLayout16, 'numeric');
+            app.b_2EditField.Layout.Row = 2;
+            app.b_2EditField.Layout.Column = 2;
+            app.b_2EditField.Value = 1;
+
+            % Create b_2EditFieldLabel
+            app.b_2EditFieldLabel = uilabel(app.GridLayout16);
+            app.b_2EditFieldLabel.Interpreter = 'latex';
+            app.b_2EditFieldLabel.HorizontalAlignment = 'right';
+            app.b_2EditFieldLabel.Layout.Row = 2;
+            app.b_2EditFieldLabel.Layout.Column = 1;
+            app.b_2EditFieldLabel.Text = '$b_2=$';
+
+            % Create frack_sb_1sb_2Label
+            app.frack_sb_1sb_2Label = uilabel(app.GridLayout16);
+            app.frack_sb_1sb_2Label.Interpreter = 'latex';
+            app.frack_sb_1sb_2Label.FontSize = 14;
+            app.frack_sb_1sb_2Label.Layout.Row = 4;
+            app.frack_sb_1sb_2Label.Layout.Column = 2;
+            app.frack_sb_1sb_2Label.Text = '$\frac{k_s}{b_{1}s+b_2}$';
+
+            % Create HsLabel
+            app.HsLabel = uilabel(app.GridLayout16);
+            app.HsLabel.Interpreter = 'latex';
+            app.HsLabel.HorizontalAlignment = 'right';
+            app.HsLabel.FontSize = 14;
+            app.HsLabel.Layout.Row = 4;
+            app.HsLabel.Layout.Column = 1;
+            app.HsLabel.Text = '$H(s)=$';
+
+            % Create PerturbacionesTab
+            app.PerturbacionesTab = uitab(app.BloquesDefTab);
+            app.PerturbacionesTab.Title = 'Perturbaciones';
+
+            % Create GridLayout17
+            app.GridLayout17 = uigridlayout(app.PerturbacionesTab);
+            app.GridLayout17.ColumnWidth = {94, 103};
+            app.GridLayout17.RowHeight = {'3.17x', '3.17x', '1x', '3.17x', '3.17x'};
+
+            % Create TurbulenciaCheckBox
+            app.TurbulenciaCheckBox = uicheckbox(app.GridLayout17);
+            app.TurbulenciaCheckBox.ValueChangedFcn = createCallbackFcn(app, @TurbulenciaCheckBoxValueChanged, true);
+            app.TurbulenciaCheckBox.Text = 'Turbulencia';
+            app.TurbulenciaCheckBox.Layout.Row = 4;
+            app.TurbulenciaCheckBox.Layout.Column = 1;
+
+            % Create RfagadevientoCheckBox
+            app.RfagadevientoCheckBox = uicheckbox(app.GridLayout17);
+            app.RfagadevientoCheckBox.ValueChangedFcn = createCallbackFcn(app, @RfagadevientoCheckBoxValueChanged, true);
+            app.RfagadevientoCheckBox.Text = 'Ráfaga de viento';
+            app.RfagadevientoCheckBox.Layout.Row = 1;
+            app.RfagadevientoCheckBox.Layout.Column = [1 2];
+
+            % Create Magnitudk_osEditFieldLabel
+            app.Magnitudk_osEditFieldLabel = uilabel(app.GridLayout17);
+            app.Magnitudk_osEditFieldLabel.Interpreter = 'latex';
+            app.Magnitudk_osEditFieldLabel.HorizontalAlignment = 'right';
+            app.Magnitudk_osEditFieldLabel.Layout.Row = 2;
+            app.Magnitudk_osEditFieldLabel.Layout.Column = 1;
+            app.Magnitudk_osEditFieldLabel.Text = '$Magnitud (k_{os})=$';
+
+            % Create Magnitudk_osEditField
+            app.Magnitudk_osEditField = uieditfield(app.GridLayout17, 'numeric');
+            app.Magnitudk_osEditField.Enable = 'off';
+            app.Magnitudk_osEditField.Layout.Row = 2;
+            app.Magnitudk_osEditField.Layout.Column = 2;
+            app.Magnitudk_osEditField.Value = 0.001;
+
+            % Create PotenciaNEditFieldLabel
+            app.PotenciaNEditFieldLabel = uilabel(app.GridLayout17);
+            app.PotenciaNEditFieldLabel.Interpreter = 'latex';
+            app.PotenciaNEditFieldLabel.HorizontalAlignment = 'right';
+            app.PotenciaNEditFieldLabel.Layout.Row = 5;
+            app.PotenciaNEditFieldLabel.Layout.Column = 1;
+            app.PotenciaNEditFieldLabel.Text = '$Potencia (N)=$';
+
+            % Create PotenciaNEditField
+            app.PotenciaNEditField = uieditfield(app.GridLayout17, 'numeric');
+            app.PotenciaNEditField.Enable = 'off';
+            app.PotenciaNEditField.Layout.Row = 5;
+            app.PotenciaNEditField.Layout.Column = 2;
+            app.PotenciaNEditField.Value = 0.1;
+
+            % Create ControldebalanceodeunavinLabel
+            app.ControldebalanceodeunavinLabel = uilabel(app.GridLayoutLeft);
+            app.ControldebalanceodeunavinLabel.HorizontalAlignment = 'center';
+            app.ControldebalanceodeunavinLabel.FontSize = 20;
+            app.ControldebalanceodeunavinLabel.FontWeight = 'bold';
+            app.ControldebalanceodeunavinLabel.Layout.Row = 1;
+            app.ControldebalanceodeunavinLabel.Layout.Column = 1;
+            app.ControldebalanceodeunavinLabel.Text = 'Control de balanceo de un avión';
+
+            % Create CenterPanel
+            app.CenterPanel = uipanel(app.GridLayout);
+            app.CenterPanel.Layout.Row = 1;
+            app.CenterPanel.Layout.Column = 2;
+
+            % Create GridLayout2
+            app.GridLayout2 = uigridlayout(app.CenterPanel);
+            app.GridLayout2.ColumnWidth = {'1x'};
+            app.GridLayout2.BackgroundColor = [0.9412 0.9412 0.9412];
+
+            % Create TabGroup3
+            app.TabGroup3 = uitabgroup(app.GridLayout2);
+            app.TabGroup3.Layout.Row = 1;
+            app.TabGroup3.Layout.Column = 1;
+
+            % Create RespuestaeneltiempoTab
+            app.RespuestaeneltiempoTab = uitab(app.TabGroup3);
+            app.RespuestaeneltiempoTab.Title = 'Respuesta en el tiempo';
+
+            % Create GridLayout11
+            app.GridLayout11 = uigridlayout(app.RespuestaeneltiempoTab);
+            app.GridLayout11.ColumnWidth = {'1x'};
+            app.GridLayout11.RowHeight = {30, '1x'};
+
+            % Create axesTemporal
+            app.axesTemporal = uiaxes(app.GridLayout11);
+            title(app.axesTemporal, 'Ángulo de balanceo')
+            xlabel(app.axesTemporal, 't (seg)')
+            ylabel(app.axesTemporal, '\phi(t)')
+            zlabel(app.axesTemporal, 'Z')
+            app.axesTemporal.Box = 'on';
+            app.axesTemporal.XGrid = 'on';
+            app.axesTemporal.YGrid = 'on';
+            app.axesTemporal.ColorOrder = [0 0.4471 0.7412;0.851 0.3255 0.098;0.9294 0.6941 0.1255;0.4941 0.1843 0.5569;0.4667 0.6745 0.1882;0.302 0.7451 0.9333;0.6353 0.0784 0.1843;1 1 0.0667;0.0745 0.6235 1;1 0.4118 0.1608;0.3922 0.8314 0.0745;0.7176 0.2745 1;0.0588 1 1];
+            app.axesTemporal.Layout.Row = 2;
+            app.axesTemporal.Layout.Column = 1;
+
+            % Create Panel_6
+            app.Panel_6 = uipanel(app.GridLayout11);
+            app.Panel_6.Layout.Row = 1;
+            app.Panel_6.Layout.Column = 1;
+
+            % Create SealdeentradaDropDown
+            app.SealdeentradaDropDown = uidropdown(app.Panel_6);
+            app.SealdeentradaDropDown.Items = {'Escalón unitario', 'Rampa unitaria', 'Parábola', 'Impulso', 'Pulso periódico'};
+            app.SealdeentradaDropDown.ValueChangedFcn = createCallbackFcn(app, @SealdeentradaDropDownValueChanged, true);
+            app.SealdeentradaDropDown.FontWeight = 'bold';
+            app.SealdeentradaDropDown.BackgroundColor = [1 1 1];
+            app.SealdeentradaDropDown.Position = [5 5 219 20];
+            app.SealdeentradaDropDown.Value = 'Escalón unitario';
+
+            % Create rtLabel
+            app.rtLabel = uilabel(app.Panel_6);
+            app.rtLabel.Interpreter = 'latex';
+            app.rtLabel.HorizontalAlignment = 'right';
+            app.rtLabel.Position = [288 4 52 22];
+            app.rtLabel.Text = '$[r(t)]=$';
+
+            % Create rtEditField
+            app.rtEditField = uieditfield(app.Panel_6, 'text');
+            app.rtEditField.Enable = 'off';
+            app.rtEditField.Position = [355 4 159 22];
+            app.rtEditField.Value = '3 1 4 5 2 0';
+
+            % Create matButton
+            app.matButton = uibutton(app.Panel_6, 'push');
+            app.matButton.Icon = 'file.png';
+            app.matButton.BackgroundColor = [0.7176 0.2745 1];
+            app.matButton.FontWeight = 'bold';
+            app.matButton.Enable = 'off';
+            app.matButton.Position = [703 4 84 22];
+            app.matButton.Text = '.mat';
+
+            % Create PeriodosegEditFieldLabel
+            app.PeriodosegEditFieldLabel = uilabel(app.Panel_6);
+            app.PeriodosegEditFieldLabel.HorizontalAlignment = 'right';
+            app.PeriodosegEditFieldLabel.Position = [534 4 94 22];
+            app.PeriodosegEditFieldLabel.Text = 'Periodo (seg):';
+
+            % Create PeriodosegEditField
+            app.PeriodosegEditField = uieditfield(app.Panel_6, 'numeric');
+            app.PeriodosegEditField.Enable = 'off';
+            app.PeriodosegEditField.Position = [639 4 47 22];
+            app.PeriodosegEditField.Value = 20;
+
+            % Create BODETab
+            app.BODETab = uitab(app.TabGroup3);
+            app.BODETab.Title = 'BODE';
+
+            % Create GridLayout8
+            app.GridLayout8 = uigridlayout(app.BODETab);
+            app.GridLayout8.RowHeight = {'1x'};
+
+            % Create bodeFaseAxes
+            app.bodeFaseAxes = uiaxes(app.GridLayout8);
+            title(app.bodeFaseAxes, 'Fase')
+            xlabel(app.bodeFaseAxes, 'Frecuencia (rad/s)')
+            ylabel(app.bodeFaseAxes, 'Grados de fase')
+            zlabel(app.bodeFaseAxes, 'Z')
+            app.bodeFaseAxes.Box = 'on';
+            app.bodeFaseAxes.XGrid = 'on';
+            app.bodeFaseAxes.YGrid = 'on';
+            app.bodeFaseAxes.ColorOrder = [1 0 1;0 0 1;0 1 0;1 0 0;0 1 1;0.4941 0.1843 0.5569;1 0.4118 0.1608];
+            app.bodeFaseAxes.Layout.Row = 1;
+            app.bodeFaseAxes.Layout.Column = 2;
+
+            % Create bodeMagAxes
+            app.bodeMagAxes = uiaxes(app.GridLayout8);
+            title(app.bodeMagAxes, 'Magnitud')
+            xlabel(app.bodeMagAxes, 'Frecuencia (rad/s)')
+            ylabel(app.bodeMagAxes, 'Ganancia (dB)')
+            zlabel(app.bodeMagAxes, 'Z')
+            app.bodeMagAxes.Box = 'on';
+            app.bodeMagAxes.XGrid = 'on';
+            app.bodeMagAxes.YGrid = 'on';
+            app.bodeMagAxes.ColorOrder = [1 0 1;0 0 1;0 1 0;1 0 0;0 1 1;0.4941 0.1843 0.5569;1 0.4118 0.1608];
+            app.bodeMagAxes.Layout.Row = 1;
+            app.bodeMagAxes.Layout.Column = 1;
+
+            % Create TabGroup
+            app.TabGroup = uitabgroup(app.GridLayout2);
+            app.TabGroup.Layout.Row = 2;
+            app.TabGroup.Layout.Column = 1;
+
+            % Create STEPinfoTab
+            app.STEPinfoTab = uitab(app.TabGroup);
+            app.STEPinfoTab.Title = 'STEP info';
+
+            % Create GridLayout9
+            app.GridLayout9 = uigridlayout(app.STEPinfoTab);
+            app.GridLayout9.RowHeight = {'1x'};
+
+            % Create infoTempoAxes
+            app.infoTempoAxes = uiaxes(app.GridLayout9);
+            title(app.infoTempoAxes, 'Respuesta a variaciones de la constante de proporcionalidad')
+            xlabel(app.infoTempoAxes, 'k_p')
+            ylabel(app.infoTempoAxes, 'Parámetro seleccionado')
+            zlabel(app.infoTempoAxes, 'Z')
+            app.infoTempoAxes.Box = 'on';
+            app.infoTempoAxes.XGrid = 'on';
+            app.infoTempoAxes.YGrid = 'on';
+            app.infoTempoAxes.FontSize = 11;
+            app.infoTempoAxes.Layout.Row = 1;
+            app.infoTempoAxes.Layout.Column = 1;
+
+            % Create Panel_7
+            app.Panel_7 = uipanel(app.GridLayout9);
+            app.Panel_7.Layout.Row = 1;
+            app.Panel_7.Layout.Column = 2;
+
+            % Create GridLayout18
+            app.GridLayout18 = uigridlayout(app.Panel_7);
+            app.GridLayout18.ColumnWidth = {'1x'};
+
+            % Create infoTempoTabla
+            app.infoTempoTabla = uitable(app.GridLayout18);
+            app.infoTempoTabla.BackgroundColor = [1 1 1;0.9412 0.9412 0.9412];
+            app.infoTempoTabla.ColumnName = {'Ess (deg)'; 'tr (seg)'; 'ts (seg)'; 'mp (%)'; 'tp (seg)'};
+            app.infoTempoTabla.RowName = {};
+            app.infoTempoTabla.CellSelectionCallback = createCallbackFcn(app, @infoTempoTablaCellSelection, true);
+            app.infoTempoTabla.Layout.Row = 1;
+            app.infoTempoTabla.Layout.Column = 1;
+
+            % Create Panel_8
+            app.Panel_8 = uipanel(app.GridLayout18);
+            app.Panel_8.BorderType = 'none';
+            app.Panel_8.Layout.Row = 2;
+            app.Panel_8.Layout.Column = 1;
+
+            % Create FuncindetransferenciadelazoabiertoTextAreaLabel
+            app.FuncindetransferenciadelazoabiertoTextAreaLabel = uilabel(app.Panel_8);
+            app.FuncindetransferenciadelazoabiertoTextAreaLabel.HorizontalAlignment = 'right';
+            app.FuncindetransferenciadelazoabiertoTextAreaLabel.FontWeight = 'bold';
+            app.FuncindetransferenciadelazoabiertoTextAreaLabel.Position = [13 132 238 22];
+            app.FuncindetransferenciadelazoabiertoTextAreaLabel.Text = 'Función de transferencia de lazo abierto';
+
+            % Create FuncindetransferenciadelazoabiertoTextArea
+            app.FuncindetransferenciadelazoabiertoTextArea = uitextarea(app.Panel_8);
+            app.FuncindetransferenciadelazoabiertoTextArea.FontName = 'Monospaced';
+            app.FuncindetransferenciadelazoabiertoTextArea.FontSize = 14;
+            app.FuncindetransferenciadelazoabiertoTextArea.Position = [13 9 345 122];
+
+            % Create BODEinfoTab
+            app.BODEinfoTab = uitab(app.TabGroup);
+            app.BODEinfoTab.Title = 'BODE info';
+
+            % Create GridLayout6
+            app.GridLayout6 = uigridlayout(app.BODEinfoTab);
+            app.GridLayout6.RowHeight = {'1x'};
+
+            % Create infoFrecAxes
+            app.infoFrecAxes = uiaxes(app.GridLayout6);
+            title(app.infoFrecAxes, 'Respuesta a variaciones de la constante de proporcionalidad')
+            xlabel(app.infoFrecAxes, 'k_p')
+            ylabel(app.infoFrecAxes, 'Parámetro seleccionado')
+            zlabel(app.infoFrecAxes, 'Z')
+            app.infoFrecAxes.Box = 'on';
+            app.infoFrecAxes.XGrid = 'on';
+            app.infoFrecAxes.YGrid = 'on';
+            app.infoFrecAxes.FontSize = 11;
+            app.infoFrecAxes.Layout.Row = 1;
+            app.infoFrecAxes.Layout.Column = 1;
+
+            % Create infoFrecTabla
+            app.infoFrecTabla = uitable(app.GridLayout6);
+            app.infoFrecTabla.BackgroundColor = [1 1 1;0.9412 0.9412 0.9412];
+            app.infoFrecTabla.ColumnName = {'fc (rad/s)'; 'BW (rad/s)'; 'Kpos'; 'Kvel'; 'MG (dB)'; 'MF (deg)'; 'Pico (dB)'; 'fr (rad/s)'};
+            app.infoFrecTabla.RowName = {};
+            app.infoFrecTabla.CellSelectionCallback = createCallbackFcn(app, @infoFrecTablaCellSelection, true);
+            app.infoFrecTabla.Layout.Row = 1;
+            app.infoFrecTabla.Layout.Column = 2;
+
+            % Create RightPanel
+            app.RightPanel = uipanel(app.GridLayout);
+            app.RightPanel.Layout.Row = 1;
+            app.RightPanel.Layout.Column = 3;
+
+            % Create GridLayout4
+            app.GridLayout4 = uigridlayout(app.RightPanel);
+            app.GridLayout4.ColumnWidth = {'1x'};
+            app.GridLayout4.BackgroundColor = [0.9412 0.9412 0.9412];
+
+            % Create TabGroup5
+            app.TabGroup5 = uitabgroup(app.GridLayout4);
+            app.TabGroup5.Layout.Row = 1;
+            app.TabGroup5.Layout.Column = 1;
+
+            % Create RegindeestabilidadTab
+            app.RegindeestabilidadTab = uitab(app.TabGroup5);
+            app.RegindeestabilidadTab.Title = 'Región de estabilidad';
+
+            % Create regionEstAxes
+            app.regionEstAxes = uiaxes(app.RegindeestabilidadTab);
+            xlabel(app.regionEstAxes, 'k_p')
+            ylabel(app.regionEstAxes, 'T')
+            zlabel(app.regionEstAxes, 'Z')
+            app.regionEstAxes.Box = 'on';
+            app.regionEstAxes.XGrid = 'on';
+            app.regionEstAxes.YGrid = 'on';
+            app.regionEstAxes.Position = [11 9 470 330];
+
+            % Create ReginestableLabel
+            app.ReginestableLabel = uilabel(app.RegindeestabilidadTab);
+            app.ReginestableLabel.BackgroundColor = [0.9804 0.9882 0.2706];
+            app.ReginestableLabel.HorizontalAlignment = 'center';
+            app.ReginestableLabel.FontWeight = 'bold';
+            app.ReginestableLabel.Position = [11 347 102 22];
+            app.ReginestableLabel.Text = 'Región estable';
+
+            % Create RegininestableLabel
+            app.RegininestableLabel = uilabel(app.RegindeestabilidadTab);
+            app.RegininestableLabel.BackgroundColor = [0.3882 0.3216 0.7294];
+            app.RegininestableLabel.HorizontalAlignment = 'center';
+            app.RegininestableLabel.FontWeight = 'bold';
+            app.RegininestableLabel.FontColor = [1 1 1];
+            app.RegininestableLabel.Position = [121 347 110 22];
+            app.RegininestableLabel.Text = 'Región inestable';
+
+            % Create DeltaSliderLabel
+            app.DeltaSliderLabel = uilabel(app.RegindeestabilidadTab);
+            app.DeltaSliderLabel.Interpreter = 'latex';
+            app.DeltaSliderLabel.HorizontalAlignment = 'center';
+            app.DeltaSliderLabel.FontWeight = 'bold';
+            app.DeltaSliderLabel.FontColor = [0 0 1];
+            app.DeltaSliderLabel.Position = [491 316 26 22];
+            app.DeltaSliderLabel.Text = '$\Delta:$';
+
+            % Create DeltaSlider
+            app.DeltaSlider = uislider(app.RegindeestabilidadTab);
+            app.DeltaSlider.Limits = [100 1000];
+            app.DeltaSlider.Orientation = 'vertical';
+            app.DeltaSlider.ValueChangingFcn = createCallbackFcn(app, @DeltaSliderValueChanging, true);
+            app.DeltaSlider.Enable = 'off';
+            app.DeltaSlider.FontWeight = 'bold';
+            app.DeltaSlider.FontColor = [0 0 1];
+            app.DeltaSlider.Position = [494 39 3 270];
+            app.DeltaSlider.Value = 100;
+
+            % Create CrticamenteestableLabel
+            app.CrticamenteestableLabel = uilabel(app.RegindeestabilidadTab);
+            app.CrticamenteestableLabel.BackgroundColor = [0.2 0.7804 0.8196];
+            app.CrticamenteestableLabel.HorizontalAlignment = 'center';
+            app.CrticamenteestableLabel.FontWeight = 'bold';
+            app.CrticamenteestableLabel.Position = [241 347 136 22];
+            app.CrticamenteestableLabel.Text = 'Críticamente estable';
+
+            % Create LugargeomtricodelasracesTab
+            app.LugargeomtricodelasracesTab = uitab(app.TabGroup5);
+            app.LugargeomtricodelasracesTab.Title = 'Lugar geométrico de las raíces';
+
+            % Create GridLayout12
+            app.GridLayout12 = uigridlayout(app.LugargeomtricodelasracesTab);
+            app.GridLayout12.ColumnWidth = {'1x'};
+            app.GridLayout12.RowHeight = {'1x'};
+
+            % Create Panel_5
+            app.Panel_5 = uipanel(app.GridLayout12);
+            app.Panel_5.BorderType = 'none';
+            app.Panel_5.Layout.Row = 1;
+            app.Panel_5.Layout.Column = 1;
+
+            % Create rootLocusAxes
+            app.rootLocusAxes = uiaxes(app.Panel_5);
+            zlabel(app.rootLocusAxes, 'Z')
+            app.rootLocusAxes.Box = 'on';
+            app.rootLocusAxes.Position = [34 39 500 320];
+
+            % Create TabGroup6
+            app.TabGroup6 = uitabgroup(app.GridLayout4);
+            app.TabGroup6.Layout.Row = 2;
+            app.TabGroup6.Layout.Column = 1;
+
+            % Create SimulacinyModelo3DTab
+            app.SimulacinyModelo3DTab = uitab(app.TabGroup6);
+            app.SimulacinyModelo3DTab.Title = 'Simulación y Modelo 3D';
+
+            % Show the figure after all components are created
+            app.UIFigure.Visible = 'on';
+        end
+    end
+
+    % App creation and deletion
+    methods (Access = public)
+
+        % Construct app
+        function app = integrador_p4
+
+            % Create UIFigure and components
+            createComponents(app)
+
+            % Register the app with App Designer
+            registerApp(app, app.UIFigure)
+
+            if nargout == 0
+                clear app
+            end
+        end
+
+        % Code that executes before app deletion
+        function delete(app)
+
+            % Delete UIFigure when app is deleted
+            delete(app.UIFigure)
+        end
+    end
+end]]></w:t></w:r></w:p></w:body></w:document>

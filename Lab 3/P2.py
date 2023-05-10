@@ -25,17 +25,12 @@ def save_animation(ani):
 
 if __name__ == "__main__":
     os.system("cls")
-
-    sys2 = TF(1)
-    plt.savefig('K', dpi=300)
-
     # Crear la figura y el eje
     fig, ax = plt.subplots()
 
     val = input("hasta que valor de k desea graficar? : \n >",)
 
     k = [i+1 for i in range(int(val))]
-
 
     # Crear una lista para guardar la curva del LGR en cada iteración
     lgr_curve = []
